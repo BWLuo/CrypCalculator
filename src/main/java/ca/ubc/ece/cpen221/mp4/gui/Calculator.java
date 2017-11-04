@@ -42,6 +42,7 @@ public class Calculator extends JPanel {
 	 */
 	public Calculator(List<Operator> supportedOperatorList) {
 		// TODO implement this constructor
+		this.supportedOperatorList=supportedOperatorList;
 	}
 
 	/**

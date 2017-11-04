@@ -5,6 +5,11 @@ package ca.ubc.ece.cpen221.mp4.expression;
  *
  */
 public class DerivativeExpression implements Expression {
+	
+	private Expression function;
+	private VariableExpression independentVar;
+	
+	private static final double DELTA_X = 1E-9;
 		
 	/**
 	 * Create an expression representing the derivative of the specified
@@ -17,12 +22,22 @@ public class DerivativeExpression implements Expression {
 	public DerivativeExpression(Expression fn, 
 					VariableExpression independentVar) {
 		// TODO implement this constructor
+		this.function = fn;
+		this.independentVar = independentVar;
 	}
 
 	@Override
 	public double eval() {
 		// TODO implement this method
-		return 0; // change this
+		
+		double y1;
+		double y2; 
+		
+		y1 = this.function.eval();
+		this.independentVar.store(independentVar.eval()+DELTA_X);
+		y2 = this.function.eval();
+		
+		return (y2 - y1)/DELTA_X; // change this
 	}
 	
 

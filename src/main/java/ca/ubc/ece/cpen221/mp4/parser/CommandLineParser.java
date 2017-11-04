@@ -8,7 +8,14 @@ import java.util.Scanner;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
+import ca.ubc.ece.cpen221.mp4.operator.AbsoluteValue;
+import ca.ubc.ece.cpen221.mp4.operator.Addition;
+import ca.ubc.ece.cpen221.mp4.operator.Division;
+import ca.ubc.ece.cpen221.mp4.operator.Exponentiation;
+import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
+import ca.ubc.ece.cpen221.mp4.operator.Negation;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
+import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
 
 /**
  * CommandLineParser - a command line calculator.
@@ -26,6 +33,13 @@ public class CommandLineParser {
 	public static void main(String[] args) {
 
 		Set<Operator> operatorSet = new HashSet<Operator>();
+		operatorSet.add(new Addition());
+		operatorSet.add(new Subtraction());
+		operatorSet.add(new Multiplication());
+		operatorSet.add(new Division());
+		operatorSet.add(new Exponentiation());
+		operatorSet.add(new AbsoluteValue());
+		operatorSet.add(new Negation());
 
 		// TODO add operators to operatorSet
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import ca.ubc.ece.cpen221.mp4.operator.Operator;
+import ca.ubc.ece.cpen221.mp4.operator.*;
 
 /**
  * Main - creates and runs a new Calculator GUI. 
@@ -23,7 +23,16 @@ public class Main {
 	}
 	
 	private static void createAndShowSetupScreen() {
-		List<Operator> operators = new ArrayList<>();		
+		List<Operator> operators = new ArrayList<>();
+		operators.add(new Addition());
+		operators.add(new Subtraction());
+		operators.add(new Multiplication());
+		operators.add(new Division());
+		operators.add(new Exponentiation());
+		operators.add(new AbsoluteValue());
+		operators.add(new Negation());
+
+		
 		Calculator calculator = new Calculator(operators);
 		calculator.launch();
 	}
