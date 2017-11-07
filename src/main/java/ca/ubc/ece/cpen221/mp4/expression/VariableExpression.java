@@ -27,6 +27,7 @@ public class VariableExpression implements Expression {
 	public VariableExpression(String name) {
 		// TODO Implement this constructor
 		this.name = name;
+		this.value = 0;
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class VariableExpression implements Expression {
 	@Override
 	public String toString() {
 		// TODO implement this method
-		return name + " = " + Double.toString(value); // change this
+		return name + " = " + value; // change this
 	}
 
 	/**
