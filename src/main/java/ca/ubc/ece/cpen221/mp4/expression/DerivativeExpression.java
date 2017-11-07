@@ -34,10 +34,10 @@ public class DerivativeExpression implements Expression {
 		double y2; 
 		
 		y1 = this.function.eval();
-		this.independentVar.store(independentVar.eval()+DELTA_X);
+		this.independentVar.store(independentVar.eval() + DELTA_X);
 		y2 = this.function.eval();
 		
-		return (y2 - y1)/DELTA_X; // change this
+		return (y2 - y1) / DELTA_X; // change this
 	}
 	
 
