@@ -1,5 +1,7 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,8 @@ import java.util.Map;
  *
  */
 public class Cryptarithm {
+	
+	private String[] cryptarithmArray;
 
 	/**
 	 * Cryptarithm constructor
@@ -18,6 +22,8 @@ public class Cryptarithm {
 	 */
 	public Cryptarithm(String[] cryptarithm) {
 		// TODO implement this constructor
+		this.cryptarithmArray = cryptarithm;
+		
 	}
 
 	/**
@@ -29,7 +35,12 @@ public class Cryptarithm {
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
-		return null; // change this
+		List<Map<Character, Integer>> possibleSolutions = new ArrayList<Map<Character,Integer>>();
+		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();
+		
+		
+		
+		return possibleSolutions; // change this
 	}
 
 	// You will need more methods
