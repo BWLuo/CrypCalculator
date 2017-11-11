@@ -1,9 +1,11 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,44 +40,64 @@ public class Cryptarithm {
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
-		List<Map<Character, Integer>> possibleSolutions = new ArrayList<Map<Character,Integer>>();
+		List<Map<Character, Integer>> possibleSolutions = new LinkedList<Map<Character,Integer>>();
 		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();
 		
 		
 		
-		return possibleSolutions; // change this
+		return possibleSolutions;
 	}
+	
+//	public static List<Map<Character, Integer>> findPossibleCharacterValues(List<Character> charList) {
+//		List<Map<Character, Integer>> characterValueList = new LinkedList<Map<Character,Integer>>();
+//		Map<Character, Integer> valueMap;
+//		int listSize = charList.size();
+//
+//		// obtain list of permutations of values between 0 - 9 (there can only be max 10 characters)
+//		Set<List<Integer>> valueSet 
+//			= permutationGenerator(new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)));
+//		
+//		for (List<Integer> l : valueSet) {
+//			valueMap = new HashMap<Character, Integer>();
+//			
+//			for (int i = 0; i < listSize; i++) {
+//				valueMap.put(charList.get(i), l.get(i));
+//			}
+//			
+//			characterValueList.add(new HashMap<Character, Integer>(valueMap));
+//		}
+//		
+//		return characterValueList;
+//	}
 
-	// You will need more methods
-	public static <T> Set<List<T>> permutationGenerator(List<T> list) {
-		Set<List<T>> listOfPerm = new HashSet<List<T>>();
-		int size = list.size();
-		int[] heapArray = new int[size];
-		
-		for (int i = 0; i < size; i++)
-			heapArray[i] = 0;
-		
-		
-		listOfPerm.add(new ArrayList<T>(list));
-		
-		int i = 0;
-		while (i < size) {
-			if (heapArray[i] < i) {
-				if (i % 2 == 0) 
-					Collections.swap(list, 0, i);
+	/**
+	 * Returns a set of lists of all possible permutations to the list given
+	 * 
+	 * @param list - a list of any type
+	 * @return a set of lists containing all possible permutations of list
+	 */
+	/**
+	 * Returns a set of lists of all possible permutations to the list given
+	 * 
+	 * @param list - a list of any type
+	 * @return a set of lists containing all possible permutations of list
+	 */
+	public static <T> Set<List<T>> permutationGenerator(Set<List<T>> permSet, List<T> list, int n) {
+		if (n == 1)
+			permSet.add(list);
+		else {
+			for (int i = 0; i < (n - 1); i++) {
+				permutationGenerator(permSet, list, n - 1);
+				if ((n % 2) == 0) 
+					Collections.swap(list, i, n - 1);
 				else 
-					Collections.swap(list, heapArray[i], i);
+					Collections.swap(list, 0, n - 1);
 				
-				
-				listOfPerm.add(new ArrayList<T>(list));
-				heapArray[i] = heapArray[i] + 1;
-				i = 0;
-			} else {
-				heapArray[i] = 0;
-				i++;
 			}
+			
+			permutationGenerator(permSet, list, n - 1);
 		}
 		
-		return listOfPerm;
+		return permSet;
 	}
 }
