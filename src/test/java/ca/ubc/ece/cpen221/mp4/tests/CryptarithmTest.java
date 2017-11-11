@@ -15,11 +15,4 @@ public class CryptarithmTest {
 		Cryptarithm.permutationGenerator(new HashSet<List<Integer>>(), list, list.size());
 		
 	}
-	
-	@Test
-	public void test1() {
-		List<Character> list = Arrays.asList('b', 'a', 't');
-		//System.out.println(Cryptarithm.findPossibleCharacterValues(list));
-		
-	}
 }
