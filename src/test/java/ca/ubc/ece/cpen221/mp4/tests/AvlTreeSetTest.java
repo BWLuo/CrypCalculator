@@ -48,7 +48,7 @@ public class AvlTreeSetTest {
 		tree.insert(15);
 		tree.insert(15);
 		assertEquals(3, tree.size());
-		assertEquals(2,tree.getHeight());
+		assertEquals(1,tree.getHeight());
 		
 		assertFalse(tree.contains(1));
 		assertTrue(tree.contains(4));
@@ -63,10 +63,10 @@ public class AvlTreeSetTest {
 		tree.insert(26);
 		tree.insert(3);
 		tree.insert(9);
-		assertEquals(3,tree.getHeight());
+		assertEquals(2,tree.getHeight());
 		
 		tree.insert(15);
-		assertEquals(3,tree.getHeight());
+		assertEquals(2,tree.getHeight());
 		
 		assertEquals(26,tree.getMax());
 		assertEquals(3,tree.getMin());
@@ -100,7 +100,7 @@ public class AvlTreeSetTest {
 		tree.insert(1);
 		tree.insert(15);
 		tree.remove(10);
-		assertEquals(3,tree.getHeight());
+		assertEquals(2,tree.getHeight());
 
 	}
 	
@@ -115,7 +115,7 @@ public class AvlTreeSetTest {
 		tree.insert(101);
 		tree.insert(91);
 		tree.remove(100);
-		assertEquals(3,tree.getHeight());
+		assertEquals(2,tree.getHeight());
 
 		
 	}
