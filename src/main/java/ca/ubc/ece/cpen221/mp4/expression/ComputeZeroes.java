@@ -23,6 +23,7 @@ public class ComputeZeroes {
 		double value = 0;
 		double slope = 0;
 		
+		//applying Newton's method
 		do {
 			
 			x.store(currentApprox);

@@ -21,23 +21,21 @@ public class DerivativeExpression implements Expression {
 	 */
 	public DerivativeExpression(Expression fn, 
 					VariableExpression independentVar) {
-		// TODO implement this constructor
 		this.function = fn;
 		this.independentVar = independentVar;
 	}
 
 	@Override
-	public double eval() {
-		// TODO implement this method
-		
+	public double eval() {		
 		double y1;
 		double y2; 
 		
+		//finding y-values
 		y1 = this.function.eval();
 		this.independentVar.store(independentVar.eval() + DELTA_X);
 		y2 = this.function.eval();
 		
-		return (y2 - y1) / DELTA_X; // change this
+		return (y2 - y1) / DELTA_X; // finding slope
 	}
 	
 
