@@ -139,7 +139,7 @@ public class AvlTreeSet {
             mLeft = left;
             mRight = right;
             mHeight = Math.max(left.getHeight(), right.getHeight()) + 1;
-            mSize = left.size() + right.size();
+            mSize = left.size() + right.size() + 1;
         }
 
         public int size() {
