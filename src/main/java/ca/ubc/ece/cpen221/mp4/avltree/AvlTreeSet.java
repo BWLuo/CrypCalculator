@@ -217,6 +217,10 @@ public class AvlTreeSet {
             if (value < mValue) {
                 return mLeft.contains(value);
             }
+            
+            if(value > mValue) {
+            	return mRight.contains(value);
+            }
 
             return false;
         }
