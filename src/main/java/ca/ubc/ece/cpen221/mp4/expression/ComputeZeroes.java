@@ -19,23 +19,18 @@ public class ComputeZeroes {
 	public static double computeZero(Expression fn, VariableExpression x, double approxZero, double tolerance) {
 		//function for the derivative
 		DerivativeExpression derivative = new DerivativeExpression(fn, x);
-		
-		//iterate to find better Estimates
 		double currentApprox = approxZero;
-		double successiveEstimate;
-		double slope;
-		double value = fn.eval();
+		double value = 0;
+		double slope = 0;
 		
-		x.store(approxZero);
-		
-		while(Math.abs(value) <= tolerance) {
-			x.store(currentApprox);
-			slope = derivative.eval();
-			value = fn.eval();
-			successiveEstimate = currentApprox - (slope * value);
-			currentApprox = successiveEstimate;
+		do {
 			
-		}
+			x.store(currentApprox);
+			slope = derivative.eval();			
+			value = fn.eval();
+			currentApprox = currentApprox - (value / slope);
+			
+		}while(Math.abs(value) >= tolerance);
 		
 		return currentApprox;
 

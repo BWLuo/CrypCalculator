@@ -41,8 +41,6 @@ public class CommandLineParser {
 		operatorSet.add(new AbsoluteValue());
 		operatorSet.add(new Negation());
 
-		// TODO add operators to operatorSet
-
 		ExpressionParser parser = new ExpressionParser(operatorSet, new ExpressionMaker());
 
 		Scanner scanner = new Scanner(System.in);

@@ -24,8 +24,7 @@ public class ExpressionMaker {
 	 */
 	public Expression createBinaryOperationExpression(BinaryOperator operator, Expression operand1,
 			Expression operand2) {
-		// TODO implement this method
-		return new BinaryOperatorExpression(operator,operand1,operand2);
+		return new BinaryOperatorExpression(operator, operand1, operand2);
 	}
 
 	/**
@@ -38,9 +37,7 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createUnaryOperationExpression(UnaryOperator operator, Expression operand) {
-		// TODO implement this method
-	
-		return new UnaryOperatorExpression(operator,operand);
+		return new UnaryOperatorExpression(operator, operand);
 	}
 
 	/**
@@ -51,8 +48,6 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createNumberExpression(double value) {
-		// TODO implement this method
-		
 		return new NumberExpression(value);
 	}
 
