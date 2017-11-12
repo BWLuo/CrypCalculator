@@ -128,7 +128,7 @@ public class AvlTreeSet {
 
         Node() {
             mValue = -1;
-            mHeight = -1;
+            mHeight = 0;
             mLeft = this;
             mRight = this;
             mSize = 0;
