@@ -11,8 +11,8 @@ import ca.ubc.ece.cpen221.mp4.cryptarithm.Cryptarithm;
 public class CryptarithmTest {
 	@Test
 	public void test0() {
-		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-		Cryptarithm.permutationGenerator(new HashSet<List<Integer>>(), list, list.size());
+		String[] s = {"WORD", "+", "TEST", "=", "HI", "-", "PHONE"};
+		Cryptarithm test = new Cryptarithm(s);
 		
 	}
 }

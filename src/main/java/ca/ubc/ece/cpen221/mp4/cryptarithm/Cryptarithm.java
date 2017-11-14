@@ -16,7 +16,10 @@ import java.util.Set;
  */
 public class Cryptarithm {
 	
-	private String[] cryptarithmArray;
+	private List<String> wordArray;
+	private List<String> operatorArray;
+	private List<String> answerWordArray;
+	private List<String> answerOperatorArray;
 
 	/**
 	 * Cryptarithm constructor
@@ -26,8 +29,36 @@ public class Cryptarithm {
 	 *            cryptarithm
 	 */
 	public Cryptarithm(String[] cryptarithm) {
-		// TODO implement this constructor
-		this.cryptarithmArray = cryptarithm;
+		boolean answer = false;
+		int count = 0;
+		String s;
+		int size = cryptarithm.length;
+		wordArray = new LinkedList<String>();
+		operatorArray = new LinkedList<String>();
+		answerWordArray = new LinkedList<String>();
+		answerOperatorArray = new LinkedList<String>();
+		
+		while (!answer) {
+			s = cryptarithm[count];
+			if (s.equals("="))
+				answer = true;
+			else if (s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/"))
+				operatorArray.add(s);
+			else
+				wordArray.add(s);
+			
+			count++;
+		}
+		
+		while (count < size) {
+			s = cryptarithm[count];
+			if (s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/"))
+				answerOperatorArray.add(s);
+			else 
+				answerWordArray.add(s);
+			
+			count++;
+		}
 		
 	}
 
@@ -41,8 +72,7 @@ public class Cryptarithm {
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
 		List<Map<Character, Integer>> possibleSolutions = new LinkedList<Map<Character,Integer>>();
-		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();
-		
+		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();		
 		
 		
 		return possibleSolutions;
@@ -54,7 +84,7 @@ public class Cryptarithm {
 		int listSize = charList.size();
 
 		// obtain list of permutations of values between 0 - 9 (there can only be max 10 characters)
-		Set<List<Integer>> valueSet 
+		Set<List<Integer>> valueSet
 			= permutationGenerator(new HashSet<List<Integer>>(), new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)), 10);
 		
 		for (List<Integer> l : valueSet) {
@@ -88,9 +118,9 @@ public class Cryptarithm {
 		else {
 			for (int i = 0; i < (n - 1); i++) {
 				permutationGenerator(permSet, list, n - 1);
-				if ((n % 2) == 0) 
+				if ((n % 2) == 0)
 					Collections.swap(list, i, n - 1);
-				else 
+				else
 					Collections.swap(list, 0, n - 1);
 				
 			}
