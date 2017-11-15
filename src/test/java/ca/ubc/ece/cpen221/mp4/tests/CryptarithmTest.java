@@ -12,8 +12,9 @@ import ca.ubc.ece.cpen221.mp4.cryptarithm.NoSolutionException;
 public class CryptarithmTest {
 	@Test
 	public void test0() throws NoSolutionException {
-		String[] s = {"SEND", "+", "MORE", "=", "MO", "-", "MONEY"};
+		String[] s = {"SEND", "+", "MORE", "=", "MONEY"};
 		Cryptarithm test = new Cryptarithm(s);
+		System.out.print(test.solve());
 		
 	}
 }

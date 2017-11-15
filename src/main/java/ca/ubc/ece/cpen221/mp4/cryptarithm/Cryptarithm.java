@@ -20,10 +20,11 @@ public class Cryptarithm {
 	private List<String> operatorArray;
 	private List<String> answerWordArray;
 	private List<String> answerOperatorArray;
-	private Map<Character, Boolean> letterMap;
+	private Set<Character> firstLetter;
+	private List<Character> letterList;
 
 	/**
-	 * Cryptarithm constructor
+	 * Cryptarithm constructor. Throws exceptions if an invalid cryptarithm is given.
 	 * 
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
@@ -33,6 +34,7 @@ public class Cryptarithm {
 	public Cryptarithm(String[] cryptarithm) throws NoSolutionException {
 		boolean answer = false;
 		boolean word = true;
+		int numEquals = 0;
 		int count = 0;
 		String s;
 		int size = cryptarithm.length;
@@ -40,7 +42,21 @@ public class Cryptarithm {
 		operatorArray = new LinkedList<String>();
 		answerWordArray = new LinkedList<String>();
 		answerOperatorArray = new LinkedList<String>();
-		letterMap = new HashMap<Character, Boolean>();
+		firstLetter = new HashSet<Character>();
+		letterList= new LinkedList<Character>();
+		
+		if (cryptarithm[0].equals("=") || cryptarithm[cryptarithm.length - 1].equals("="))
+			throw new NoSolutionException("ERROR: '=' is found at the start or end of the equation");
+		
+		for (String chkEquals : cryptarithm) {
+			if (chkEquals.equals("=")) {
+				numEquals++;
+			}
+		}
+		
+		if (numEquals != 1)
+			throw new NoSolutionException("ERROR: No '=' found or more than one found");
+			
 		
 		// put in all words and operators into its own array before the =
 		while (!answer) {
@@ -56,26 +72,30 @@ public class Cryptarithm {
 			else if (word) {
 				wordArray.add(s);
 				for (Character c : s.toCharArray()) {
-					if (s.indexOf(c) == 0) // indicate when its the first letter of the word
-						letterMap.put(c, Boolean.TRUE);
-					else if (!letterMap.containsKey(c)) // ensures first letter status doesn't get overwritten
-						letterMap.put(c, Boolean.FALSE);
+					if (letterList.contains(c))
+						continue;
+					if (s.indexOf(c) == 0) { // indicate when its the first letter of the word
+						firstLetter.add(c);
+						letterList.add(c);
+					}
+					else // ensures first letter status doesn't get overwritten
+						letterList.add(c);
 					
 				}
 				
 				// if there are more than 10 unique letters, throw exception
-				if (letterMap.size() > 10)
-					throw new NoSolutionException();
+				if (letterList.size() > 10)
+					throw new NoSolutionException("ERROR: More than 10 unique letters found");
 				
 				word = false; // next in the array should be an operator
 			} else
-				throw new NoSolutionException();
+				throw new NoSolutionException("ERROR: That is not a valid expression");
 			
 			count++;
 		}
 		
 		if (word) // last before the = should be a word
-			throw new NoSolutionException();
+			throw new NoSolutionException("ERROR: Last item before '=' should be a word");
 		
 		word = true; // next should be a word
 		
@@ -91,27 +111,32 @@ public class Cryptarithm {
 			else if (word) {
 				answerWordArray.add(s);
 				for (Character c : s.toCharArray()) {
-					if (s.indexOf(c) == 0) // indicate when its the first letter of the word
-						letterMap.put(c, Boolean.TRUE);
-					else if (!letterMap.containsKey(c)) // ensures first letter status doesn't get overwritten
-						letterMap.put(c, Boolean.FALSE);
+					if (letterList.contains(c))
+						continue;
+					if (s.indexOf(c) == 0) { // indicate when its the first letter of the word
+						firstLetter.add(c);
+						letterList.add(c);
+					}
+					else // ensures first letter status doesn't get overwritten
+						letterList.add(c);
+					
 					
 				}
 				
 				// if there are more than 10 unique letters, throw exception
-				if (letterMap.size() > 10)
-					throw new NoSolutionException();
+				if (letterList.size() > 10)
+					throw new NoSolutionException("ERROR: More than 10 unique letters found");
 				
 				word = false; // next in the array should be an operator
 			}
 			else 
-				throw new NoSolutionException();
+				throw new NoSolutionException("ERROR: That is not a valid expression");
 			
 			count++;
 		}
 		
 		if (word) // last in the array should be a word
-			throw new NoSolutionException();
+			throw new NoSolutionException("ERROR: Last item in the array should be a word");
 		
 	}
 
@@ -123,34 +148,69 @@ public class Cryptarithm {
 	 *         the cryptarithm.
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
-		// TODO implement this method
-		List<Map<Character, Integer>> possibleSolutions = new LinkedList<Map<Character,Integer>>();
-		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();
-		
-		
-		return possibleSolutions;
-	}
-	
-	private List<Map<Character, Integer>> findPossibleCharacterValues(List<Character> charList) {
 		List<Map<Character, Integer>> characterValueList = new LinkedList<Map<Character,Integer>>();
 		Map<Character, Integer> valueMap;
-		int listSize = charList.size();
+		int listSize = this.letterList.size();
 
 		// obtain list of permutations of values between 0 - 9 (there can only be max 10 characters)
 		Set<List<Integer>> valueSet
 			= permutationGenerator(new HashSet<List<Integer>>(), new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)), 10);
 		
+		outerloop:
 		for (List<Integer> l : valueSet) {
 			valueMap = new HashMap<Character, Integer>();
-			
+		
 			for (int i = 0; i < listSize; i++) {
-				valueMap.put(charList.get(i), l.get(i));
+				valueMap.put(this.letterList.get(i), l.get(i));
+			}			
+			
+			for (Character c : this.firstLetter) {
+				if (valueMap.get(c).intValue() == 0) {
+					continue outerloop; // don't add the valueMap if the first letter of a word has a value of 0
+				}
 			}
 			
-			characterValueList.add(new HashMap<Character, Integer>(valueMap));
+			if (equationValue(valueMap, wordArray, operatorArray) == equationValue(valueMap, answerWordArray, answerOperatorArray))
+				if (!characterValueList.contains(valueMap))
+					characterValueList.add(valueMap);
 		}
 		
+		if (characterValueList.isEmpty())
+			throw new NoSolutionException("There is no solution to the cryptarithm");
+		
 		return characterValueList;
+	}
+	
+	private double equationValue(Map<Character, Integer> valueMap, List<String> wordList, List<String> operandList) {
+		double answer = wordValue(valueMap, wordList.get(0));
+		int size = wordList.size();
+		
+		// depending on operand, do operation for each word
+		for (int i = 1; i < size; i++) {
+			if (operandList.get(i - 1).equals("+"))
+				answer += wordValue(valueMap, wordList.get(i));
+			else if (operandList.get(i - 1).equals("-")) 
+				answer -= wordValue(valueMap, wordList.get(i));
+			else if (operandList.get(i - 1).equals("*"))
+				answer *= wordValue(valueMap, wordList.get(i));
+			else
+				answer /= wordValue(valueMap, wordList.get(i));
+		}
+		
+		return answer;
+		
+	}
+	
+	private double wordValue(Map<Character, Integer> valueMap, String s) {
+		double answer = 0;
+		int size = s.length();
+		char[] sArray = s.toCharArray();
+		
+		for (int i = 0; i < size; i++) {
+			answer += valueMap.get(sArray[size - (i + 1)]).doubleValue() * Math.pow(10, i);
+		}
+		
+		return answer;
 	}
 
 	/**
