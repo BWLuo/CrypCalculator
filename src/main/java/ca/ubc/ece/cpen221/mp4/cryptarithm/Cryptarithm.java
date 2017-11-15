@@ -175,9 +175,6 @@ public class Cryptarithm {
 					characterValueList.add(valueMap);
 		}
 		
-		if (characterValueList.isEmpty())
-			throw new NoSolutionException("There is no solution to the cryptarithm");
-		
 		return characterValueList;
 	}
 	
@@ -243,4 +240,5 @@ public class Cryptarithm {
 		
 		return permSet;
 	}
+	
 }
