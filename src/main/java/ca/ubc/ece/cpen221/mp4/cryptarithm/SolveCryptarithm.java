@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * SolveCryptarithm - Main program class to continually take in cryptarithm inputs from the user.
+ * 					  The program then solves the cryptarithm and prints the solution.
+ *
+ */
 public class SolveCryptarithm {
 
 	static public void main(String[] args) {
@@ -15,6 +20,7 @@ public class SolveCryptarithm {
 			System.out.println("Enter a cryptarithm:");
 			String cryptarithm = scanner.nextLine();
 			try {
+				// split the string by whitespace into an array and create a new cryptarithm with it
 				Cryptarithm crypt = new Cryptarithm(cryptarithm.split("\\s+"));
 				solutions = crypt.solve();
 				System.out.println(solutions.size() + " solution(s):");

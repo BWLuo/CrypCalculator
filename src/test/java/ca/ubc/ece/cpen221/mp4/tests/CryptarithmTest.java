@@ -32,7 +32,6 @@ public class CryptarithmTest {
 	public void subtraction() throws NoSolutionException{
 		String[] s = {"COUNT", "-", "COIN", "=", "SNUB"};
 		Cryptarithm test = new Cryptarithm(s);
-		System.out.println(test.solve());
 		assertEquals("[{B=7, C=1, S=9, T=2, U=6, I=8, N=5, O=0}]",test.solve().toString());
 	}
 	

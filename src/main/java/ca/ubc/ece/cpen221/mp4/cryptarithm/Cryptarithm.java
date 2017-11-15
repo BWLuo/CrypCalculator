@@ -16,11 +16,17 @@ import java.util.Set;
  */
 public class Cryptarithm {
 	
+	/* contains the words before the = */
 	private List<String> wordArray;
+	/* contains the operators before the = */
 	private List<String> operatorArray;
+	/* contains the words after the = */ 
 	private List<String> answerWordArray;
+	/* contains the operators after the */
 	private List<String> answerOperatorArray;
+	/* contains the characters that are the first letter of a word */
 	private Set<Character> firstLetter;
+	/* contains the list of unique letters */
 	private List<Character> letterList;
 
 	/**
@@ -45,6 +51,7 @@ public class Cryptarithm {
 		firstLetter = new HashSet<Character>();
 		letterList= new LinkedList<Character>();
 		
+		// check to see if cryptarithm doesn't start or end with '='
 		if (cryptarithm[0].equals("=") || cryptarithm[cryptarithm.length - 1].equals("="))
 			throw new NoSolutionException("ERROR: '=' is found at the start or end of the equation");
 		
@@ -54,6 +61,7 @@ public class Cryptarithm {
 			}
 		}
 		
+		// ensure only 1 "=" sign is found
 		if (numEquals != 1)
 			throw new NoSolutionException("ERROR: No '=' found or more than one found");
 			
@@ -144,7 +152,7 @@ public class Cryptarithm {
 	 *         the cryptarithm.
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
-		List<Map<Character, Integer>> characterValueList = new LinkedList<Map<Character,Integer>>();
+		List<Map<Character, Integer>> solution = new LinkedList<Map<Character,Integer>>();
 		Map<Character, Integer> valueMap;
 		int listSize = this.letterList.size();
 
@@ -156,6 +164,7 @@ public class Cryptarithm {
 		for (List<Integer> l : valueSet) {
 			valueMap = new HashMap<Character, Integer>();
 		
+			// assign a value for each character
 			for (int i = 0; i < listSize; i++) {
 				valueMap.put(this.letterList.get(i), l.get(i));
 			}			
@@ -166,14 +175,24 @@ public class Cryptarithm {
 				}
 			}
 			
+			// add valid solutions to the list if the solution doesn't already exist in the list
 			if (equationValue(valueMap, wordArray, operatorArray) == equationValue(valueMap, answerWordArray, answerOperatorArray))
-				if (!characterValueList.contains(valueMap))
-					characterValueList.add(valueMap);
+				if (!solution.contains(valueMap))
+					solution.add(valueMap);
 		}
 		
-		return characterValueList;
+		return solution;
 	}
 	
+	/**
+	 * 
+	 * Takes an equation of words and operators and return the correct answer.
+	 * 
+	 * @param valueMap - the value of each character
+	 * @param wordList - a list of words used in the equation in order. wordList must not be null or empty
+	 * @param operandList - a list of operands used in order. Must have size = wordList.size() - 1
+	 * @return the solution to the equation as a double
+	 */
 	private double equationValue(Map<Character, Integer> valueMap, List<String> wordList, List<String> operandList) {
 		double answer = wordValue(valueMap, wordList.get(0));
 		int size = wordList.size();
@@ -194,12 +213,22 @@ public class Cryptarithm {
 		
 	}
 	
+	/**
+	 * 
+	 * Find the numerical value of a given word. The value is determined by characters
+	 * representing a single digit. 
+	 * 
+	 * @param valueMap - the value of each character
+	 * @param s - the word to find the value of. s cannot be null
+	 * @return the value of the word as a double
+	 */
 	private double wordValue(Map<Character, Integer> valueMap, String s) {
 		double answer = 0;
 		int size = s.length();
 		char[] sArray = s.toCharArray();
 		
 		for (int i = 0; i < size; i++) {
+			// each value is multiplied by a power of 10 according to where they are located
 			answer += valueMap.get(sArray[size - (i + 1)]).doubleValue() * Math.pow(10, i);
 		}
 		
@@ -207,13 +236,8 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * Returns a set of lists of all possible permutations to the list given
-	 * 
-	 * @param list - a list of any type
-	 * @return a set of lists containing all possible permutations of list
-	 */
-	/**
-	 * Returns a set of lists of all possible permutations to the list given
+	 * Returns a set of lists of all possible permutations to the list given.
+	 * The permutations are generated using heaps algorithm.
 	 * 
 	 * @param list - a list of any type
 	 * @return a set of lists containing all possible permutations of list
