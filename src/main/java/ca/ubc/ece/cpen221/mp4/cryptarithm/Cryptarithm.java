@@ -72,14 +72,12 @@ public class Cryptarithm {
 			else if (word) {
 				wordArray.add(s);
 				for (Character c : s.toCharArray()) {
-					if (letterList.contains(c))
+					if (s.indexOf(c) == 0)  // indicate when its the first letter of the word
+						firstLetter.add(c);					
+					else if (letterList.contains(c)) // only add unique letters to letter list
 						continue;
-					if (s.indexOf(c) == 0) { // indicate when its the first letter of the word
-						firstLetter.add(c);
-						letterList.add(c);
-					}
-					else // ensures first letter status doesn't get overwritten
-						letterList.add(c);
+					
+					letterList.add(c);
 					
 				}
 				
@@ -111,15 +109,12 @@ public class Cryptarithm {
 			else if (word) {
 				answerWordArray.add(s);
 				for (Character c : s.toCharArray()) {
-					if (letterList.contains(c))
+					if (s.indexOf(c) == 0)  // indicate when its the first letter of the word
+						firstLetter.add(c);					
+					else if (letterList.contains(c)) // only add unique letters to letter list
 						continue;
-					if (s.indexOf(c) == 0) { // indicate when its the first letter of the word
-						firstLetter.add(c);
-						letterList.add(c);
-					}
-					else // ensures first letter status doesn't get overwritten
-						letterList.add(c);
 					
+					letterList.add(c);
 					
 				}
 				
@@ -137,6 +132,8 @@ public class Cryptarithm {
 		
 		if (word) // last in the array should be a word
 			throw new NoSolutionException("ERROR: Last item in the array should be a word");
+		
+		System.out.println(firstLetter);
 		
 	}
 
