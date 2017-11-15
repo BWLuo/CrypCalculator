@@ -7,12 +7,11 @@ import org.junit.Test;
 
 import ca.ubc.ece.cpen221.mp4.expression.*;
 import ca.ubc.ece.cpen221.mp4.operator.*;
-import ca.ubc.ece.cpen221.mp4.parser.ExpressionMaker;
 
 public class SimpleCalculatorTest {
 	
 	@Test
-	public void VariableExpression() {
+	public void variableExpression() {
 		VariableExpression x = new VariableExpression("x");
 		
 		assertEquals(0,x.eval(),0.1);
@@ -24,7 +23,7 @@ public class SimpleCalculatorTest {
 	}
 	
 	@Test
-	public void NumberExpression() {
+	public void numberExpression() {
 		NumberExpression one = new NumberExpression(1);
 		
 		assertEquals(1,one.eval(),0.1);
@@ -32,7 +31,7 @@ public class SimpleCalculatorTest {
 	}
 	
 	@Test
-	public void UnaryOperatorExpression(){
+	public void unaryOperatorExpression(){
 		Negation negation = new Negation();
 		AbsoluteValue absoluteValue = new AbsoluteValue();
 		
@@ -48,7 +47,7 @@ public class SimpleCalculatorTest {
 	}
 	
 	@Test
-	public void BinaryOperatorExpression() {
+	public void binaryOperatorExpression() {
 		Addition addition = new Addition();
 		Subtraction subtraction = new Subtraction();
 		Multiplication multiplication = new Multiplication();
@@ -77,7 +76,7 @@ public class SimpleCalculatorTest {
 	}
 	
 	@Test
-	public void DerivativeExpression() {
+	public void derivativeExpression() {
 		VariableExpression x = new VariableExpression("x");
 		BinaryOperatorExpression xSquared = new BinaryOperatorExpression(new Multiplication(),x,x);
 		DerivativeExpression derivativeXSquared = new DerivativeExpression(xSquared, x);
@@ -89,7 +88,7 @@ public class SimpleCalculatorTest {
 	}
 	
 	@Test
-	public void ComputeZeroes() {
+	public void computeZeroes() {
 		Addition addition = new Addition();
 		Subtraction subtraction = new Subtraction();
 		Multiplication multiplication = new Multiplication();
