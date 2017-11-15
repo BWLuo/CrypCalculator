@@ -22,14 +22,28 @@ Part 3
 - Resolved 1 small bug
 
 
-Bowen Luo (STUDENT NUMBER)
+Bowen Luo (46381166)
 ===
 
 Part 1
 ---
+-Made GUI and Parser package usable
+-Includes
+	1)adding operators to calculator and parser
+	2)implementing expression Maker
+-Created all Operators
+-Created all Expression
+-Created Compute Zero
+
+
 
 Part 2
 ---
+-created test cases 
 
 Part 3
 ---
+-Added branch to contains method to fix contains() bug #1
+-Fixed insert bug #002
+-Fixed size bug #003
+-created test cases
