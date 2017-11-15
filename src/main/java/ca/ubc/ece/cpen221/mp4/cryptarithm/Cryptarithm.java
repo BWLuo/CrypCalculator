@@ -20,6 +20,7 @@ public class Cryptarithm {
 	private List<String> operatorArray;
 	private List<String> answerWordArray;
 	private List<String> answerOperatorArray;
+	private Map<Character, Boolean> letterMap;
 
 	/**
 	 * Cryptarithm constructor
@@ -27,9 +28,11 @@ public class Cryptarithm {
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
+	 * @throws NoSolutionException 
 	 */
-	public Cryptarithm(String[] cryptarithm) {
+	public Cryptarithm(String[] cryptarithm) throws NoSolutionException {
 		boolean answer = false;
+		boolean word = true;
 		int count = 0;
 		String s;
 		int size = cryptarithm.length;
@@ -37,28 +40,78 @@ public class Cryptarithm {
 		operatorArray = new LinkedList<String>();
 		answerWordArray = new LinkedList<String>();
 		answerOperatorArray = new LinkedList<String>();
+		letterMap = new HashMap<Character, Boolean>();
 		
+		// put in all words and operators into its own array before the =
 		while (!answer) {
 			s = cryptarithm[count];
+			
 			if (s.equals("="))
-				answer = true;
-			else if (s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/"))
+				answer = true; // leave this loop but still increment counter by 1 to read past =
+			else if ((s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/")) && !word) {
 				operatorArray.add(s);
-			else
+				
+				word = true; // next in the array should be a word
+			}
+			else if (word) {
 				wordArray.add(s);
+				for (Character c : s.toCharArray()) {
+					if (s.indexOf(c) == 0) // indicate when its the first letter of the word
+						letterMap.put(c, Boolean.TRUE);
+					else if (!letterMap.containsKey(c)) // ensures first letter status doesn't get overwritten
+						letterMap.put(c, Boolean.FALSE);
+					
+				}
+				
+				// if there are more than 10 unique letters, throw exception
+				if (letterMap.size() > 10)
+					throw new NoSolutionException();
+				
+				word = false; // next in the array should be an operator
+			} else
+				throw new NoSolutionException();
 			
 			count++;
 		}
 		
+		if (word) // last before the = should be a word
+			throw new NoSolutionException();
+		
+		word = true; // next should be a word
+		
+		// put in all words and operators into its own array after the =
 		while (count < size) {
 			s = cryptarithm[count];
-			if (s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/"))
+			
+			if ((s.equals("+") | s.equals("-") | s.equals("*") | s.equals("/")) && !word) {
 				answerOperatorArray.add(s);
-			else 
+				
+				word = true; // next in the array should be a word
+			}
+			else if (word) {
 				answerWordArray.add(s);
+				for (Character c : s.toCharArray()) {
+					if (s.indexOf(c) == 0) // indicate when its the first letter of the word
+						letterMap.put(c, Boolean.TRUE);
+					else if (!letterMap.containsKey(c)) // ensures first letter status doesn't get overwritten
+						letterMap.put(c, Boolean.FALSE);
+					
+				}
+				
+				// if there are more than 10 unique letters, throw exception
+				if (letterMap.size() > 10)
+					throw new NoSolutionException();
+				
+				word = false; // next in the array should be an operator
+			}
+			else 
+				throw new NoSolutionException();
 			
 			count++;
 		}
+		
+		if (word) // last in the array should be a word
+			throw new NoSolutionException();
 		
 	}
 
@@ -72,7 +125,7 @@ public class Cryptarithm {
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
 		List<Map<Character, Integer>> possibleSolutions = new LinkedList<Map<Character,Integer>>();
-		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();		
+		Map<Character, Integer> solutionMap = new HashMap<Character, Integer>();
 		
 		
 		return possibleSolutions;
