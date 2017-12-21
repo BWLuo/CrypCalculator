@@ -1,6 +1,6 @@
 **CPEN 221 / Fall 2017: Machine Problem 4 Work Division**
 
-William Choi (36631133)
+William Choi
 ===
 
 Part 1
@@ -22,7 +22,7 @@ Part 3
 - Resolved 1 small bug
 
 
-Bowen Luo (46381166)
+Bowen Luo
 ===
 
 Part 1
